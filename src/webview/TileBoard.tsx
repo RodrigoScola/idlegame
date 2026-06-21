@@ -1,6 +1,8 @@
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
-import { Computer } from "./Computer";
+import { useSnapshot } from "./hooks/useSnapshot";
+import { breakComputer, createComputer, isBroken } from "../game/Computer";
+import { pathBetween } from '../game/movement';
 
 const GRID_SIZE = 6;
 const TILE_SIZE = 40;
@@ -12,23 +14,15 @@ const REPAIR_MS = 400;
 const HOME: Position = { col: GRID_SIZE - 1, row: GRID_SIZE - 1 };
 
 // One tile at a time, column first then row, never diagonal.
-function pathBetween(from: Position, to: Position): Position[] {
-  const steps: Position[] = [];
-  let { col, row } = from;
-
-  while (col !== to.col) {
-    col += col < to.col ? 1 : -1;
-    steps.push({ col, row });
-  }
-  while (row !== to.row) {
-    row += row < to.row ? 1 : -1;
-    steps.push({ col, row });
-  }
-  return steps;
-}
 
 export function TileBoard(): React.JSX.Element {
-  const [computer, setComputer] = useState(() => new Computer(0, 0));
+  const snapshot = useSnapshot();
+
+  const [computer] = useState(() => {
+    const comp = snapshot.computers[0] || createComputer();
+    return isBroken(comp) ? comp : breakComputer(comp);
+  });
+
   const [characterPos, setCharacterPos] = useState<Position>(HOME);
   const [busy, setBusy] = useState(false);
   const timeouts = useRef<ReturnType<typeof setTimeout>[]>([]);
@@ -54,24 +48,22 @@ export function TileBoard(): React.JSX.Element {
   }
 
   function handleComputerClick(): void {
-    if (busy || !computer.isBroken) {
+    if (busy || !isBroken(computer)) {
       return;
     }
     setBusy(true);
 
     const toComputer = pathBetween(characterPos, {
-      col: computer.col,
-      row: computer.row,
+      col: computer.position.col,
+      row: computer.position.row,
     });
 
     walk(toComputer, () => {
-      setComputer((c) => c.fixed());
+      //todo: make this function
+      computer.status = "fixed";
 
       schedule(() => {
-        const toHome = pathBetween(
-          { col: computer.col, row: computer.row },
-          HOME,
-        );
+        const toHome = pathBetween(computer.position, HOME);
         walk(toHome, () => setBusy(false));
       }, REPAIR_MS);
     });
@@ -113,17 +105,17 @@ export function TileBoard(): React.JSX.Element {
           onClick={handleComputerClick}
           style={{
             position: "absolute",
-            left: computer.col * STEP,
-            top: computer.row * STEP,
+            left: computer.position.col * STEP,
+            top: computer.position.row * STEP,
             width: TILE_SIZE,
             height: TILE_SIZE,
-            background: computer.isBroken
+            background: isBroken(computer)
               ? "var(--vscode-errorForeground)"
               : "var(--vscode-terminal-ansiGreen)",
-            animation: computer.isBroken
+            animation: isBroken(computer)
               ? "computer-blink 1s infinite"
               : "none",
-            cursor: computer.isBroken && !busy ? "pointer" : "default",
+            cursor: isBroken(computer) && !busy ? "pointer" : "default",
           }}
         />
 

@@ -32,7 +32,11 @@ export class GameState {
   }
 
   snapshot(): GameSnapshot {
-    return { score: this.score, clicksPerSecond: this.clicksPerSecond };
+    return {
+      score: this.score,
+      clicksPerSecond: this.clicksPerSecond,
+      computers: [],
+    };
   }
 
   private emitChange(): void {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const initial: GameSnapshot = { score: 0, clicksPerSecond: 1 };
+const initial: GameSnapshot = { score: 0, clicksPerSecond: 1, computers: [] };
 
 export function useSnapshot(): GameSnapshot {
   const [snapshot, setSnapshot] = useState<GameSnapshot>(initial);
