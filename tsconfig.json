@@ -1,12 +1,16 @@
 {
 	"compilerOptions": {
-		"module": "Node16",
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
 		"target": "ES2022",
 		"lib": [
-			"ES2022"
+			"ES2022",
+			"DOM"
 		],
+		"jsx": "react-jsx",
 		"sourceMap": true,
 		"rootDir": "src",
+		"types": ["node", "mocha"],
 		"strict": true   /* enable all strict type-checking options */
 		/* Additional Checks */
 		// "noImplicitReturns": true, /* Report error when not all code paths in function return a value. */

@@ -12,6 +12,34 @@
   "activationEvents": [],
   "main": "./dist/extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "idlegame",
+          "title": "Idle Game",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "idlegame": [
+        {
+          "id": "idlegame.game",
+          "name": "Game",
+          "type": "webview"
+        },
+        {
+          "id": "idlegame.stats",
+          "name": "Stats",
+          "type": "webview"
+        },
+        {
+          "id": "idlegame.upgrades",
+          "name": "Upgrades",
+          "type": "webview"
+        }
+      ]
+    },
     "commands": [
       {
         "command": "idlegame.helloWorld",
@@ -34,16 +62,25 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.125.0",
     "@types/mocha": "^10.0.8",
     "@types/node": "20.x",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@types/vscode": "^1.125.0",
     "@typescript-eslint/eslint-plugin": "^8.7.0",
     "@typescript-eslint/parser": "^8.7.0",
-    "eslint": "^9.11.1",
-    "esbuild": "^0.24.0",
-    "npm-run-all": "^4.1.5",
-    "typescript": "^5.6.2",
     "@vscode/test-cli": "^0.0.10",
-    "@vscode/test-electron": "^2.4.1"
+    "@vscode/test-electron": "^2.4.1",
+    "esbuild": "^0.24.0",
+    "eslint": "^9.11.1",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.6.2"
+  },
+  "dependencies": {
+    "@vscode-elements/elements": "^2.5.1",
+    "@vscode-elements/react-elements": "^2.4.0",
+    "@vscode/codicons": "^0.0.45",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
   }
 }
