@@ -1,10 +1,5 @@
 import * as vscode from "vscode";
 import { GameState } from "./GameState";
-import {
-  GameSnapshot,
-  ViewKind,
-  WebviewToHostMessage,
-} from "./shared/protocol";
 
 abstract class BaseViewProvider implements vscode.WebviewViewProvider {
   protected abstract readonly viewKind: ViewKind;

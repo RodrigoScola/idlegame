@@ -1,15 +1,8 @@
 import * as React from "react";
 import { createRoot } from "react-dom/client";
-import { ViewKind } from "../shared/protocol";
 import { GameView } from "./GameView";
 import { StatsView } from "./StatsView";
 import { UpgradesView } from "./UpgradesView";
-
-declare global {
-  interface Window {
-    __VIEW__: ViewKind;
-  }
-}
 
 const views: Record<ViewKind, React.ComponentType> = {
   game: GameView,

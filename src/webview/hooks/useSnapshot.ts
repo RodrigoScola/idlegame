@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { GameSnapshot, HostToWebviewMessage } from "../../shared/protocol";
 
 const initial: GameSnapshot = { score: 0, clicksPerSecond: 1 };
 

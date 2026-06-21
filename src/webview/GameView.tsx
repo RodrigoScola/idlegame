@@ -2,6 +2,7 @@ import * as React from "react";
 import { VscodeButton } from "@vscode-elements/react-elements";
 import { getVsCodeApi } from "../shared/protocol";
 import { useSnapshot } from "./hooks/useSnapshot";
+import { TileBoard } from "./TileBoard";
 
 export function GameView(): React.JSX.Element {
   const snapshot = useSnapshot();
@@ -13,6 +14,9 @@ export function GameView(): React.JSX.Element {
       <VscodeButton onClick={() => getVsCodeApi().postMessage({ type: "click" })}>
         Click me (+1)
       </VscodeButton>
+      <div style={{ marginTop: "12px" }}>
+        <TileBoard />
+      </div>
     </div>
   );
 }

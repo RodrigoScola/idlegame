@@ -1,5 +1,4 @@
 import * as vscode from "vscode";
-import { GameSnapshot } from "./shared/protocol";
 
 export class GameState {
   private score = 0;
